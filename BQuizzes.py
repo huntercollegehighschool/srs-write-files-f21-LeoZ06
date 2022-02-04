@@ -12,11 +12,12 @@ answerfile = 'answers' + str(quizNum) + '.txt'
 
 # 1. Open 2 files that you will write to, a quiz and an answer key file
 # <var> = open(<string>, 'w')
-
+quizfile = open('quizfile', 'w')
+answerkeyfile = open('answerkeyfile', 'w')
 
 # 2. Write headings on both files
 # <filevariable>.write(<string>)
-
+quizfile.write('Quiz', str(quizNum), ":", "\n", "Name:", "\n", "Date:")
 
 # the following creates a list of states, and then puts them in a random order
 states = list(capitals.keys())
@@ -32,38 +33,39 @@ for questionNum in range(50):  # loop through each of the 50 states
   # <list>.remove(<value>)
   # OR
   # del <list>[<index>]
+  wrong.remove(correct)
 
   # 4. A multiple choice quiz generally as a couple of wrong choices along with the correct choice. Create a list of multiple choice options. Start by randomly selecting 3 or 4 (or more, if you wish) wrong choices
   # <variable> = random.sample(<list>, <how many>)
+  wronganswer = random.sample(wrong, 3)
   
-
   # 5. Add the correct answer to your list of multiple choice options.
   # <list>.append(<value>)
-
-
+  wrong.append(correct)
 
   # 6. Make sure you shuffle the options for the multiple choice (otherwise, the correct answer will always be the last choice)
   # random.shuffle(<list>)
-
+  random.shuffle(wrong)
 
   # 7. Write the question to the quiz (It should at least include the state itself and possibly the questions number)
   # Reminder: states[questionNum] is the current state
   # <filevariable>.write(<text>)
-
+  quizfile.write(questionNum, ".", " ", "What is the capital of", states[questionNum], "?")
 
   # 8. Write the answer choices to the quiz. Choices are usually labeled A, B, C, D. It can be done with a loop (which is much easier), but doesn't have to be.
   # <filevariable>.write(<text>)
-  
+  s = "ABCD"
+  for i in range(4):
+    quizfile.write(s[i], ") ", wrong[i])
 
   # 9. Write the correct answer to the answer key file. It's up to you how you want to format it, but it probably should include the question number, the correct answer letter, and the correct capital.
   # <list>.index(<value>) may be helpful
   # <filevariable>.write(<text>)
-  
-
+  answerkeyfile.write(questionNum, ") ", s[wrong.index(correct)], ") ", correct)
 
 # 10. After completely writing both the quiz and the answer key, make sure to close both files.
 # <filevariable>.close()
-
-
+quizfile.close()
+answerkeyfile.close()
 
 # Hopefully you were able to generate one 50 question quiz. Can you modify this to generate multiple 50 question quizzes (hint: it does involve a loop)
